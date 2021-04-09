@@ -1,0 +1,12 @@
+//Map Reduce in HIVE
+hive
+CREATE TABLE FILES (line STRING); 
+LOAD DATA INPATH 'data1.txt' OVERWRITE INTO TABLE FILES; 
+
+CREATE TABLE word_count AS 
+SELECT w.word, count(1) AS count from 
+(SELECT explode(split(line, ' ')) as word from FILES) w 
+GROUP BY w.word 
+ORDER BY w.word; 
+
+SELECT * FROM word_count ;
